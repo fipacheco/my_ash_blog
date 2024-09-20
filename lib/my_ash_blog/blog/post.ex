@@ -1,5 +1,3 @@
-# lib/my_ash_phoenix_app/blog/post.ex
-
 defmodule MyAshBlog.Blog.Post do
   use Ash.Resource,
     domain: MyAshBlog.Blog,

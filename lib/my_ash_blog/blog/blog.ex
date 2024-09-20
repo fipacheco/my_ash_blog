@@ -25,5 +25,13 @@ defmodule MyAshBlog.Blog do
       define :update_author, action: :update
       define :delete_author, action: :destroy
     end
+
+    resource MyAshBlog.Blog.User do
+      define :create_user, action: :create
+      define :list_users, action: :read
+      define :get_user, args: [:id], action: :read
+      define :update_user, action: :update
+      define :delete_user, action: :destroy
+    end
   end
 end
