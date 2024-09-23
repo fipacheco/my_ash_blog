@@ -8,7 +8,6 @@ defmodule MyAshBlog.Blog.User do
     repo MyAshBlog.Repo
   end
 
-
   attributes do
     uuid_primary_key :id
 
@@ -20,24 +19,23 @@ defmodule MyAshBlog.Blog.User do
       allow_nil? false
     end
 
-    attribute :password, :string do
-      allow_nil? false
-      sensitive? true ## ash usa sensitive nao private!!
-    end
-
     timestamps()
   end
-
 
   actions do
     defaults [:read, :destroy]
 
     create :create do
-      accept [:username, :email, :password]
+      accept [:username, :email]
     end
 
     update :update do
-      accept [:username, :email, :password]
+      accept [:username, :email]
+    end
+
+    read :by_id do
+      argument :id, :uuid, allow_nil?: false
+      filter expr(id == ^arg(:id))
     end
   end
 end

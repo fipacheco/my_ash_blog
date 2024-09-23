@@ -30,7 +30,12 @@ defmodule MyAshBlog.Blog.Comment do
     end
 
     update :update do
-      accept [:content]
+      accept [:author, :content]
+    end
+
+    read :by_id do
+      argument :id, :uuid, allow_nil?: false
+      filter expr(id == ^arg(:id))
     end
   end
 end

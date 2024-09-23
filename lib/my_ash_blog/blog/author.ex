@@ -32,5 +32,10 @@ defmodule MyAshBlog.Blog.Author do
     update :update do
       accept [:name, :email]
     end
+
+    read :by_id do
+      argument :id, :uuid, allow_nil?: false
+      filter expr(id == ^arg(:id))
+    end
   end
 end

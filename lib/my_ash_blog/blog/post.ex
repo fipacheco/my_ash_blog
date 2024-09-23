@@ -8,6 +8,20 @@ defmodule MyAshBlog.Blog.Post do
     repo MyAshBlog.Repo
   end
 
+  attributes do
+    uuid_primary_key :id
+
+    attribute :title, :string do
+      allow_nil? false
+    end
+
+    attribute :content, :string do
+      allow_nil? false
+    end
+
+    timestamps()
+  end
+
   actions do
     defaults [:read, :destroy]
 
@@ -16,25 +30,12 @@ defmodule MyAshBlog.Blog.Post do
     end
 
     update :update do
-      accept [:content]
+      accept [:title, :content]
     end
 
     read :by_id do
       argument :id, :uuid, allow_nil?: false
-      get? true
       filter expr(id == ^arg(:id))
     end
-  end
-
-  attributes do
-    uuid_primary_key :id
-
-    attribute :title, :string do
-      allow_nil? false
-    end
-
-    attribute :content, :string
-
-    timestamps()
   end
 end
