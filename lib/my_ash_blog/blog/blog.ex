@@ -1,5 +1,5 @@
 defmodule MyAshBlog.Blog do
-  use Ash.Domain
+  use Ash.Domain, extensions: [AshJsonApi.Domain]
 
   resources do
     resource MyAshBlog.Blog.Post do
@@ -8,6 +8,7 @@ defmodule MyAshBlog.Blog do
       define :get_post, args: [:id], action: :by_id
       define :update_post, action: :update
       define :delete_post, action: :destroy
+
     end
 
     resource MyAshBlog.Blog.Comment do
@@ -32,6 +33,38 @@ defmodule MyAshBlog.Blog do
       define :get_user, args: [:id], action: :read
       define :update_user, action: :update
       define :delete_user, action: :destroy
+    end
+  end
+
+  json_api do
+    routes do
+      base_route "/post", MyAshBlog.Blog.Post do
+        get :read
+        index :read
+        post :create
+        delete :destroy
+      end
+
+      base_route "/author", MyAshBlog.Blog.Author do
+        get :read
+        index :read
+        post :create
+        delete :destroy
+      end
+
+      base_route "/users", MyAshBlog.Blog.User do
+        get :read
+        index :read
+        post :create
+        delete :destroy
+      end
+
+      base_route "/comment", MyAshBlog.Blog.Comment do
+        get :read
+        index :read
+        post :create
+        delete :destroy
+      end
     end
   end
 end

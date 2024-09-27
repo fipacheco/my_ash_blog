@@ -1,6 +1,10 @@
 defmodule MyAshBlogWeb.Router do
   use MyAshBlogWeb, :router
 
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -10,8 +14,19 @@ defmodule MyAshBlogWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  scope "/api/json" do
+    pipe_through [:api]
+
+    forward "/swaggerui",
+            OpenApiSpex.Plug.SwaggerUI,
+            path: "/api/json/open_api",
+            default_model_expand_depth: 4
+
+    forward "/redoc",
+            Redoc.Plug.RedocUI,
+            spec_url: "/api/json/open_api"
+
+    forward "/", MyAshBlogWeb.AshJsonApiRouter
   end
 
   scope "/", MyAshBlogWeb do
@@ -22,11 +37,6 @@ defmodule MyAshBlogWeb.Router do
 
   scope "/api", MyAshBlogWeb do
     pipe_through :api
-
-    resources "/posts", PostController, except: [:new, :edit]
-    resources "/comments", CommentController, except: [:new, :edit]
-    resources "/authors", AuthorController, except: [:new, :edit]
-    resources "/users", UserController, except: [:new, :edit]
   end
 
   # Other scopes may use custom stacks.

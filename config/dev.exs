@@ -3,8 +3,12 @@ import Config
 # Configure your database
 config :my_ash_blog, MyAshBlog.Repo,
   adapter: AshPostgres.Adapter,
-  username: "postgres",        # Verifique se este é o usuário correto
-  password: "badcoffe", # Substitua pela senha correta
+
+  # Verifique se este é o usuário correto
+  username: "postgres",
+
+  # Substitua pela senha correta
+  password: "badcoffe",
   database: "pallet_db",
   hostname: "localhost",
   port: 5433,

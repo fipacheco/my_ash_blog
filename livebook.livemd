@@ -1,0 +1,154 @@
+# Domain Documentation
+
+## Domain MyAshBlog.Blog
+
+### Class Diagram
+
+```mermaid
+classDiagram
+    class Post {
+        UUID id
+        destroy()
+        read()
+        create(String title, String content)
+        update(String title, String content)
+        by_id(UUID id)
+    }
+    class Comment {
+        UUID id
+        destroy()
+        read()
+        create(String author, String content)
+        update(String author, String content)
+        by_id(UUID id)
+    }
+    class Author {
+        UUID id
+        destroy()
+        read()
+        create(String name, String email)
+        update(String name, String email)
+        by_id(UUID id)
+    }
+    class User {
+        UUID id
+        destroy()
+        read()
+        create(String username, String email)
+        update(String username, String email)
+        by_id(UUID id)
+    }
+```
+
+### ER Diagram
+
+```mermaid
+erDiagram
+    Post {
+        UUID id
+    }
+    Comment {
+        UUID id
+    }
+    Author {
+        UUID id
+    }
+    User {
+        UUID id
+    }
+```
+
+### Resources
+
+* [Post](#post)
+* [Comment](#comment)
+* [Author](#author)
+* [User](#user)
+
+### Post
+
+#### Attributes
+
+| Name            | Type            | Description |
+| --------------- | --------------- | ----------- |
+| **id**          | UUID            |             |
+| **title**       | String          |             |
+| **content**     | String          |             |
+| **inserted_at** | UtcDatetimeUsec |             |
+| **updated_at**  | UtcDatetimeUsec |             |
+
+#### Actions
+
+| Name        | Type      | Input                                                                                                 | Description |
+| ----------- | --------- | ----------------------------------------------------------------------------------------------------- | ----------- |
+| **destroy** | _destroy_ | <ul></ul>                                                                                             |             |
+| **read**    | _read_    | <ul></ul>                                                                                             |             |
+| **create**  | _create_  | <ul><li><b>title</b> <i>String</i> attribute</li><li><b>content</b> <i>String</i> attribute</li></ul> |             |
+| **update**  | _update_  | <ul><li><b>title</b> <i>String</i> attribute</li><li><b>content</b> <i>String</i> attribute</li></ul> |             |
+| **by_id**   | _read_    | <ul><li><b>id</b> <i>UUID</i> </li></ul>                                                              |             |
+
+### Comment
+
+#### Attributes
+
+| Name            | Type            | Description |
+| --------------- | --------------- | ----------- |
+| **id**          | UUID            |             |
+| **author**      | String          |             |
+| **content**     | String          |             |
+| **inserted_at** | UtcDatetimeUsec |             |
+| **updated_at**  | UtcDatetimeUsec |             |
+
+#### Actions
+
+| Name        | Type      | Input                                                                                                  | Description |
+| ----------- | --------- | ------------------------------------------------------------------------------------------------------ | ----------- |
+| **destroy** | _destroy_ | <ul></ul>                                                                                              |             |
+| **read**    | _read_    | <ul></ul>                                                                                              |             |
+| **create**  | _create_  | <ul><li><b>author</b> <i>String</i> attribute</li><li><b>content</b> <i>String</i> attribute</li></ul> |             |
+| **update**  | _update_  | <ul><li><b>author</b> <i>String</i> attribute</li><li><b>content</b> <i>String</i> attribute</li></ul> |             |
+| **by_id**   | _read_    | <ul><li><b>id</b> <i>UUID</i> </li></ul>                                                               |             |
+
+### Author
+
+#### Attributes
+
+| Name            | Type            | Description |
+| --------------- | --------------- | ----------- |
+| **id**          | UUID            |             |
+| **name**        | String          |             |
+| **email**       | String          |             |
+| **inserted_at** | UtcDatetimeUsec |             |
+| **updated_at**  | UtcDatetimeUsec |             |
+
+#### Actions
+
+| Name        | Type      | Input                                                                                              | Description |
+| ----------- | --------- | -------------------------------------------------------------------------------------------------- | ----------- |
+| **destroy** | _destroy_ | <ul></ul>                                                                                          |             |
+| **read**    | _read_    | <ul></ul>                                                                                          |             |
+| **create**  | _create_  | <ul><li><b>name</b> <i>String</i> attribute</li><li><b>email</b> <i>String</i> attribute</li></ul> |             |
+| **update**  | _update_  | <ul><li><b>name</b> <i>String</i> attribute</li><li><b>email</b> <i>String</i> attribute</li></ul> |             |
+| **by_id**   | _read_    | <ul><li><b>id</b> <i>UUID</i> </li></ul>                                                           |             |
+
+### User
+
+#### Attributes
+
+| Name            | Type            | Description |
+| --------------- | --------------- | ----------- |
+| **id**          | UUID            |             |
+| **username**    | String          |             |
+| **email**       | String          |             |
+| **inserted_at** | UtcDatetimeUsec |             |
+| **updated_at**  | UtcDatetimeUsec |             |
+
+#### Actions
+
+| Name        | Type      | Input                                                                                                  | Description |
+| ----------- | --------- | ------------------------------------------------------------------------------------------------------ | ----------- |
+| **destroy** | _destroy_ | <ul></ul>                                                                                              |             |
+| **read**    | _read_    | <ul></ul>                                                                                              |             |
+| **create**  | _create_  | <ul><li><b>username</b> <i>String</i> attribute</li><li><b>email</b> <i>String</i> attribute</li></ul> |             |
+| **update**  | _update_  | <ul><li><b>username</b> <i>String</i> attribute</li><li><b>email</b> <i>String</i> attribute</li></ul> |             |
+| **by_id**   | _read_    | <ul><li><b>id</b> <i>UUID</i> </li></ul>                                                               |             |

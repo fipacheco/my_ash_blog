@@ -7,6 +7,16 @@
 # General application configuration
 import Config
 
+config :mime,
+  extensions: %{"json" => "application/vnd.api+json"},
+  types: %{"application/vnd.api+json" => ["json"]}
+
+config :spark,
+  formatter: [
+    "Ash.Resource": [section_order: [:json_api]],
+    "Ash.Domain": [section_order: [:json_api]]
+  ]
+
 config :my_ash_blog,
   ash_domains: [MyAshBlog.Blog]
 
