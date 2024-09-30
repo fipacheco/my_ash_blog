@@ -22,7 +22,7 @@ defmodule MyAshBlog.Blog.Comment do
       description "Conteúdo do comentário. Campo Obrigatório"
     end
 
-    attribute :author_name, :string do
+    attribute :author, :string do
       allow_nil? false
       public? true
       description "Nome do autor do comentário"
@@ -35,12 +35,12 @@ defmodule MyAshBlog.Blog.Comment do
     defaults [:read, :destroy]
 
     create :create do
-      accept [:content, :author_name]
+      accept [:content, :author]
       description "Cria um novo comentário com o conteúdo e o nome do autor"
     end
 
     update :update do
-      accept [:content, :author_name]
+      accept [:content, :author]
       description "Função para atualização do conteúdo e nome do autor do comentário"
     end
 

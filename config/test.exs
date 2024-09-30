@@ -7,11 +7,12 @@ import Config
 # Run `mix help test` for more information.
 config :my_ash_blog, MyAshBlog.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "badcoffe",
+  database: "my_ash_blog_test",
   hostname: "localhost",
-  database: "my_ash_blog_test#{System.get_env("MIX_TEST_PARTITION")}",
+  port: 5433,
   pool: Ecto.Adapters.SQL.Sandbox,
-  pool_size: System.schedulers_online() * 2
+  pool_size: 10
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.

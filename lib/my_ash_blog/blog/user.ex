@@ -30,6 +30,13 @@ defmodule MyAshBlog.Blog.User do
       description "Email do usuário cadastrado. Campo obrigatório"
     end
 
+    attribute :password, :string do
+      allow_nil? false
+      sensitive? true
+      public? true
+      description "Senha do usuário. Campo Obrigatório"
+    end
+
     timestamps()
   end
 
@@ -37,13 +44,31 @@ defmodule MyAshBlog.Blog.User do
     defaults [:read, :destroy]
 
     create :create do
-      accept [:username, :email]
-      description "Cria um novo usuário com nome de usuário e email"
+      accept [:username, :email, :password]
+      description "Cria um novo usuário com nome de usuário, email e senha"
+
+      change fn changeset, _ctx ->
+        password = Ash.Changeset.get_attribute(changeset, :password)
+        hashed_password = Bcrypt.hash_pwd_salt(password)
+        Ash.Changeset.change_attribute(changeset, :password, hashed_password)
+      end
     end
 
     update :update do
-      accept [:username, :email]
-      description "Atualiza o nome de usuário e o email de um usuário existente"
+      accept [:username, :email, :password]
+      description "Atualiza o nome de usuário, email e senha de um usuário existente"
+      require_atomic? false
+
+      change fn changeset, _ctx ->
+        case Ash.Changeset.get_attribute(changeset, :password) do
+          nil ->
+            changeset
+
+          password ->
+            hashed_password = Bcrypt.hash_pwd_salt(password)
+            Ash.Changeset.change_attribute(changeset, :password, hashed_password)
+        end
+      end
     end
 
     read :by_id do

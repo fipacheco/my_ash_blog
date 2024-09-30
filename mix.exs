@@ -33,6 +33,7 @@ defmodule MyAshBlog.MixProject do
   defp deps do
     [
       {:open_api_spex, "~> 3.0"},
+      {:bcrypt_elixir, "~> 3.0"},
       {:redoc_ui_plug, "~> 0.2.1"},
       {:ash_json_api, "~> 1.0"},
       {:phoenix, "~> 1.7.14"},
@@ -80,7 +81,7 @@ defmodule MyAshBlog.MixProject do
       setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      test: ["ash_postgres.create --quiet", "ash.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind my_ash_blog", "esbuild my_ash_blog"],
       "assets.deploy": [
