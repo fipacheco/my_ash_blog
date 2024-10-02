@@ -30,15 +30,31 @@ defmodule MyAshBlog.Blog.Post do
       description "Conteúdo do post. Campo obrigatório"
     end
 
+    attribute :author_id, :uuid do
+      description "ID do autor deste post"
+    end
+
     timestamps()
+  end
+
+  relationships do
+    belongs_to :author, MyAshBlog.Blog.Author do
+      source_attribute :author_id
+      description "Relacao um post pertence a um author"
+    end
+
+    has_many :comments, MyAshBlog.Blog.Comment do
+      destination_attribute :post_id
+      description "Relacao um post tem vários comentários"
+    end
   end
 
   actions do
     defaults [:read, :destroy]
 
     create :create do
-      accept [:title, :content]
-      description "Cria um novo post com título e conteúdo"
+      accept [:title, :content, :author_id]
+      description "Cria um novo post com título, conteúdo e ID do autor"
     end
 
     update :update do

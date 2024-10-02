@@ -18,37 +18,30 @@ defmodule MyAshBlog.Blog.Author do
 
     attribute :name, :string do
       allow_nil? false
-      public? true
       description "Nome do autor do texto. Campo Obrigatório"
     end
 
     attribute :email, :string do
       allow_nil? false
-      public? true
       description "Email do autor do texto"
     end
 
     timestamps()
   end
 
-  actions do
-    defaults [:read, :destroy]
+  relationships do
+    has_many :posts, MyAshBlog.Blog.Post do
+      destination_attribute :author_id
+      description "Um autor tem vários posts"
+    end
+  end
 
+  actions do
     create :create do
       accept [:name, :email]
-      description "Cria um novo autor com nome e email"
     end
 
-    update :update do
-      accept [:name, :email]
-      description "Atualiza o nome e email do autor"
-    end
-
-    read :by_id do
-      argument :id, :uuid, allow_nil?: false
-      filter expr(id == ^arg(:id))
-      description "Leitura de um autor com base no ID fornecido"
-    end
+    defaults [:read, :destroy, :update]
   end
 
   json_api do

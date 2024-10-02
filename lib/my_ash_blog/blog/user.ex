@@ -40,6 +40,13 @@ defmodule MyAshBlog.Blog.User do
     timestamps()
   end
 
+  relationships do
+    has_many :comments, MyAshBlog.Blog.Comment do
+      destination_attribute :user_id
+      description "Relacao um usuário tem vários comentários"
+    end
+  end
+
   actions do
     defaults [:read, :destroy]
 
@@ -61,9 +68,7 @@ defmodule MyAshBlog.Blog.User do
 
       change fn changeset, _ctx ->
         case Ash.Changeset.get_attribute(changeset, :password) do
-          nil ->
-            changeset
-
+          nil -> changeset
           password ->
             hashed_password = Bcrypt.hash_pwd_salt(password)
             Ash.Changeset.change_attribute(changeset, :password, hashed_password)

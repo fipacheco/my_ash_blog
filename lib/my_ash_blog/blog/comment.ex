@@ -22,26 +22,42 @@ defmodule MyAshBlog.Blog.Comment do
       description "Conteúdo do comentário. Campo Obrigatório"
     end
 
-    attribute :author, :string do
-      allow_nil? false
-      public? true
-      description "Nome do autor do comentário"
+    attribute :user_id, :uuid do
+      description "ID do usuário que fez o comentário"
+    end
+
+    attribute :post_id, :uuid do
+      description "ID do post ao qual este comentário pertence"
     end
 
     timestamps()
+  end
+
+  relationships do
+    belongs_to :user, MyAshBlog.Blog.User do
+      source_attribute :user_id
+      destination_attribute :id
+      description "Relacao um comentário pertence a um usuário"
+    end
+
+    belongs_to :post, MyAshBlog.Blog.Post do
+      source_attribute :post_id
+      destination_attribute :id
+      description "Relacao um comentario pertence a um post"
+    end
   end
 
   actions do
     defaults [:read, :destroy]
 
     create :create do
-      accept [:content, :author]
-      description "Cria um novo comentário com o conteúdo e o nome do autor"
+      accept [:content, :user_id, :post_id]
+      description "Cria um novo comentário com o conteúdo, autor, usuário e post relacionados"
     end
 
     update :update do
-      accept [:content, :author]
-      description "Função para atualização do conteúdo e nome do autor do comentário"
+      accept [:content, :user_id]
+      description "Atualiza o conteúdo e autor de um comentário"
     end
 
     read :by_id do
