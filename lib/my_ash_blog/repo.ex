@@ -7,5 +7,5 @@ defmodule MyAshBlog.Repo do
     ["ash-functions", "uuid-ossp", "citext"]
   end
 
-  
+
 end

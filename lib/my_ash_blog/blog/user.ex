@@ -2,7 +2,9 @@ defmodule MyAshBlog.Blog.User do
   use Ash.Resource,
     domain: MyAshBlog.Blog,
     data_layer: AshPostgres.DataLayer,
-    extensions: [AshJsonApi.Resource]
+    extensions: [AshJsonApi.Resource, AshAuthentication]
+
+    import Ash.Resource.Actions
 
   postgres do
     table "users"
@@ -11,6 +13,31 @@ defmodule MyAshBlog.Blog.User do
 
   resource do
     description "Resource dos usuários cadastrados no blog"
+  end
+
+  authentication do
+    strategies do
+      password :password do
+        identity_field :email
+        hashed_password_field :password
+        sign_in_tokens_enabled? true
+        confirmation_required? false
+        register_action_accept [:username]
+      end
+    end
+
+    tokens do
+      enabled? true
+      token_resource MyAshBlog.Blog.AuthToken
+      signing_secret fn _, _ ->
+        Application.fetch_env!(:my_ash_blog, :token_signing_secret)
+      end
+    end
+  end
+
+  identities do
+    identity :unique_email, [:email]
+    identity :unique_username, [:username]
   end
 
   attributes do
@@ -33,8 +60,8 @@ defmodule MyAshBlog.Blog.User do
     attribute :password, :string do
       allow_nil? false
       sensitive? true
-      public? true
-      description "Senha do usuário. Campo Obrigatório"
+      writable? true
+      description "Senha do usuário. Será armazenada diretamente no banco"
     end
 
     timestamps()
@@ -43,7 +70,7 @@ defmodule MyAshBlog.Blog.User do
   relationships do
     has_many :comments, MyAshBlog.Blog.Comment do
       destination_attribute :user_id
-      description "Relacao um usuário tem vários comentários"
+      description "Relação um usuário tem vários comentários"
     end
   end
 
@@ -51,29 +78,16 @@ defmodule MyAshBlog.Blog.User do
     defaults [:read, :destroy]
 
     create :create do
+      primary? true
       accept [:username, :email, :password]
-      description "Cria um novo usuário com nome de usuário, email e senha"
-
-      change fn changeset, _ctx ->
-        password = Ash.Changeset.get_attribute(changeset, :password)
-        hashed_password = Bcrypt.hash_pwd_salt(password)
-        Ash.Changeset.change_attribute(changeset, :password, hashed_password)
-      end
+      description "Cria um novo usuário com nome de usuário, email e senha" ##acao default, implementar aut
     end
+
 
     update :update do
       accept [:username, :email, :password]
       description "Atualiza o nome de usuário, email e senha de um usuário existente"
       require_atomic? false
-
-      change fn changeset, _ctx ->
-        case Ash.Changeset.get_attribute(changeset, :password) do
-          nil -> changeset
-          password ->
-            hashed_password = Bcrypt.hash_pwd_salt(password)
-            Ash.Changeset.change_attribute(changeset, :password, hashed_password)
-        end
-      end
     end
 
     read :by_id do

@@ -18,6 +18,9 @@ config :spark,
   ]
 
 config :my_ash_blog,
+  :token_signing_secret, "some_super_secret_random_value"
+
+config :my_ash_blog,
   ash_domains: [MyAshBlog.Blog]
 
 config :my_ash_blog,

@@ -66,6 +66,8 @@ defmodule MyAshBlog.MixProject do
       {:ash, "~> 3.4"},
       {:picosat_elixir, "~> 0.2.3"},
       {:ash_postgres, "~> 2.4"},
+      {:ash_authentication, "~> 4.0"},
+      {:ash_authentication_phoenix, "~> 2.0"},
       {:ash_phoenix, "~> 2.1"}
     ]
   end
