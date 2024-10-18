@@ -17,8 +17,7 @@ config :spark,
     "Ash.Domain": [section_order: [:json_api]]
   ]
 
-config :my_ash_blog,
-  :token_signing_secret, "some_super_secret_random_value"
+config :my_ash_blog, :token_signing_secret, "sua_chave_secreta_super_secreta"
 
 config :my_ash_blog,
   ash_domains: [MyAshBlog.Blog]
@@ -31,10 +30,11 @@ config :my_ash_blog, MyAshBlog.Repo,
   adapter: AshPostgres.Adapter,
   username: "postgres",
   password: "badcoffe",
-  database: "pallet_db",
+  database: "ash_database",
   hostname: "localhost",
   port: 5433,
-  pool_size: 10
+  pool_size: 10,
+  show_sensitive_data_on_connection_error: true
 
 # Configures the endpoint
 config :my_ash_blog, MyAshBlogWeb.Endpoint,
@@ -89,3 +89,5 @@ config :phoenix, :json_library, Jason
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
+
+config :ash, :policies, show_policy_breakdowns?: true

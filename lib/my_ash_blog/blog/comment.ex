@@ -2,7 +2,8 @@ defmodule MyAshBlog.Blog.Comment do
   use Ash.Resource,
     domain: MyAshBlog.Blog,
     data_layer: AshPostgres.DataLayer,
-    extensions: [AshJsonApi.Resource]
+    extensions: [AshJsonApi.Resource],
+    authorizers: [Ash.Policy.Authorizer]
 
   postgres do
     table "comments"
@@ -10,25 +11,12 @@ defmodule MyAshBlog.Blog.Comment do
   end
 
   resource do
-    description("Resource com os comentários cadastrados no blog")
+    description "Recurso para comentários de usuários em posts."
   end
 
   attributes do
     uuid_primary_key :id
-
-    attribute :content, :string do
-      allow_nil? false
-      public? true
-      description "Conteúdo do comentário. Campo Obrigatório"
-    end
-
-    attribute :user_id, :uuid do
-      description "ID do usuário que fez o comentário"
-    end
-
-    attribute :post_id, :uuid do
-      description "ID do post ao qual este comentário pertence"
-    end
+    attribute :content, :string, allow_nil?: false
 
     timestamps()
   end
@@ -37,13 +25,13 @@ defmodule MyAshBlog.Blog.Comment do
     belongs_to :user, MyAshBlog.Blog.User do
       source_attribute :user_id
       destination_attribute :id
-      description "Relacao um comentário pertence a um usuário"
+      description "Usuário que fez o comentário."
     end
 
     belongs_to :post, MyAshBlog.Blog.Post do
       source_attribute :post_id
       destination_attribute :id
-      description "Relacao um comentario pertence a um post"
+      description "Post ao qual o comentário pertence."
     end
   end
 
@@ -51,19 +39,33 @@ defmodule MyAshBlog.Blog.Comment do
     defaults [:read, :destroy]
 
     create :create do
-      accept [:content, :user_id, :post_id]
-      description "Cria um novo comentário com o conteúdo, autor, usuário e post relacionados"
+      accept [:content, :post_id]
+      change set_attribute(:user_id, expr(^actor(:id)))
+      description "Cria um comentário em um post, qualquer usuário pode comentar."
     end
 
     update :update do
-      accept [:content, :user_id]
-      description "Atualiza o conteúdo e autor de um comentário"
+      accept [:content]
+      description "Permite que o autor do comentário o edite."
+    end
+  end
+
+  policies do
+    policy action_type(:create) do
+      authorize_if actor_present()
+      forbid_unless always()
     end
 
-    read :by_id do
-      argument :id, :uuid, allow_nil?: false
-      filter expr(id == ^arg(:id))
-      description "Leitura de um comentário com base no ID fornecido"
+    policy action_type([:update, :destroy]) do
+      description "Usuário pode editar e excluir seus próprios comentários."
+      authorize_if expr(user_id == ^actor(:id))
+      forbid_unless always()
+    end
+
+    policy action_type(:destroy) do
+      description "Admins podem excluir qualquer comentário."
+      authorize_if expr(user.role == :admin)
+      forbid_unless expr(user.role == :admin)
     end
   end
 

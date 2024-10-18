@@ -19,18 +19,11 @@ defmodule MyAshBlog.Blog do
       define :delete_comment, action: :destroy
     end
 
-    resource MyAshBlog.Blog.Author do
-      define :create_author, action: :create
-      define :list_authors, action: :read
-      define :get_author, args: [:id], action: :read
-      define :update_author, action: :update
-      define :delete_author, action: :destroy
-    end
-
     resource MyAshBlog.Blog.User do
-      define :create_user, action: :create
+      define :register_user, action: :register_with_password
+      define :login_user, action: :sign_in_with_password
       define :list_users, action: :read
-      define :get_user, args: [:id], action: :read
+      define :get_user, args: [:id], action: :by_id
       define :update_user, action: :update
       define :delete_user, action: :destroy
     end
@@ -43,14 +36,7 @@ defmodule MyAshBlog.Blog do
 
   json_api do
     routes do
-      base_route "/post", MyAshBlog.Blog.Post do
-        get :read
-        index :read
-        post :create
-        delete :destroy
-      end
-
-      base_route "/author", MyAshBlog.Blog.Author do
+      base_route "/posts", MyAshBlog.Blog.Post do
         get :read
         index :read
         post :create
@@ -60,11 +46,13 @@ defmodule MyAshBlog.Blog do
       base_route "/users", MyAshBlog.Blog.User do
         get :read
         index :read
-        post :create
+        post :register_with_password, route: "/register"
+        post :sign_in_with_password, route: "/login"
+        patch :update
         delete :destroy
       end
 
-      base_route "/comment", MyAshBlog.Blog.Comment do
+      base_route "/comments", MyAshBlog.Blog.Comment do
         get :read
         index :read
         post :create

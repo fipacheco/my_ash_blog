@@ -17,7 +17,7 @@
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "username",
+      "source": "title",
       "type": "text"
     },
     {
@@ -27,17 +27,7 @@
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "email",
-      "type": "text"
-    },
-    {
-      "allow_nil?": false,
-      "default": "nil",
-      "generated?": false,
-      "primary_key?": false,
-      "references": null,
-      "size": null,
-      "source": "password",
+      "source": "content",
       "type": "text"
     },
     {
@@ -59,6 +49,35 @@
       "size": null,
       "source": "updated_at",
       "type": "utc_datetime_usec"
+    },
+    {
+      "allow_nil?": true,
+      "default": "nil",
+      "generated?": false,
+      "primary_key?": false,
+      "references": {
+        "deferrable": false,
+        "destination_attribute": "id",
+        "destination_attribute_default": null,
+        "destination_attribute_generated": null,
+        "index?": false,
+        "match_type": null,
+        "match_with": null,
+        "multitenancy": {
+          "attribute": null,
+          "global": null,
+          "strategy": null
+        },
+        "name": "posts_user_id_fkey",
+        "on_delete": null,
+        "on_update": null,
+        "primary_key?": true,
+        "schema": "public",
+        "table": "users"
+      },
+      "size": null,
+      "source": "user_id",
+      "type": "uuid"
     }
   ],
   "base_filter": null,
@@ -66,7 +85,7 @@
   "custom_indexes": [],
   "custom_statements": [],
   "has_create_action": true,
-  "hash": "F644E82D78CB7189A2F2861E1B31E9469A46714AF69E82DFCDA14BCCAA6A607F",
+  "hash": "8AF83C6F779E65645B1AAD8C33F6F46D50B9D189C8770555FC6591081F9C30B5",
   "identities": [],
   "multitenancy": {
     "attribute": null,
@@ -75,5 +94,5 @@
   },
   "repo": "Elixir.MyAshBlog.Repo",
   "schema": null,
-  "table": "users"
+  "table": "posts"
 }

@@ -1,4 +1,4 @@
-defmodule MyAshBlog.Repo.Migrations.MigrateResources5 do
+defmodule MyAshBlog.Repo.Migrations.MigrateResources2 do
   @moduledoc """
   Updates resources based on their most recent snapshots.
 
@@ -8,14 +8,14 @@ defmodule MyAshBlog.Repo.Migrations.MigrateResources5 do
   use Ecto.Migration
 
   def up do
-    alter table(:comments) do
-      remove :author
+    alter table(:users) do
+      modify :username, :text, null: true
     end
   end
 
   def down do
-    alter table(:comments) do
-      add :author, :text, null: false
+    alter table(:users) do
+      modify :username, :text, null: false
     end
   end
 end

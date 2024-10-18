@@ -12,71 +12,43 @@
     },
     {
       "allow_nil?": false,
+      "default": "\"user\"",
+      "generated?": false,
+      "primary_key?": false,
+      "references": null,
+      "size": null,
+      "source": "role",
+      "type": "text"
+    },
+    {
+      "allow_nil?": false,
       "default": "nil",
       "generated?": false,
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "content",
+      "source": "username",
       "type": "text"
     },
     {
-      "allow_nil?": true,
+      "allow_nil?": false,
       "default": "nil",
       "generated?": false,
       "primary_key?": false,
-      "references": {
-        "deferrable": false,
-        "destination_attribute": "id",
-        "destination_attribute_default": null,
-        "destination_attribute_generated": null,
-        "index?": false,
-        "match_type": null,
-        "match_with": null,
-        "multitenancy": {
-          "attribute": null,
-          "global": null,
-          "strategy": null
-        },
-        "name": "comments_user_id_fkey",
-        "on_delete": null,
-        "on_update": null,
-        "primary_key?": true,
-        "schema": "public",
-        "table": "users"
-      },
+      "references": null,
       "size": null,
-      "source": "user_id",
-      "type": "uuid"
+      "source": "email",
+      "type": "text"
     },
     {
-      "allow_nil?": true,
+      "allow_nil?": false,
       "default": "nil",
       "generated?": false,
       "primary_key?": false,
-      "references": {
-        "deferrable": false,
-        "destination_attribute": "id",
-        "destination_attribute_default": null,
-        "destination_attribute_generated": null,
-        "index?": false,
-        "match_type": null,
-        "match_with": null,
-        "multitenancy": {
-          "attribute": null,
-          "global": null,
-          "strategy": null
-        },
-        "name": "comments_post_id_fkey",
-        "on_delete": null,
-        "on_update": null,
-        "primary_key?": true,
-        "schema": "public",
-        "table": "posts"
-      },
+      "references": null,
       "size": null,
-      "source": "post_id",
-      "type": "uuid"
+      "source": "hashed_password",
+      "type": "text"
     },
     {
       "allow_nil?": false,
@@ -104,8 +76,37 @@
   "custom_indexes": [],
   "custom_statements": [],
   "has_create_action": true,
-  "hash": "D2D6EC0D350681D1630EE91CEF12CAF9C7218D4E694514F1DC2CA944A6D4214A",
-  "identities": [],
+  "hash": "96EAD5A3BD3A5F84247B93D680D882A132528F5984D14D0643CEB906E81F2DBF",
+  "identities": [
+    {
+      "all_tenants?": false,
+      "base_filter": null,
+      "index_name": "users_unique_email_index",
+      "keys": [
+        {
+          "type": "atom",
+          "value": "email"
+        }
+      ],
+      "name": "unique_email",
+      "nils_distinct?": true,
+      "where": null
+    },
+    {
+      "all_tenants?": false,
+      "base_filter": null,
+      "index_name": "users_unique_username_index",
+      "keys": [
+        {
+          "type": "atom",
+          "value": "username"
+        }
+      ],
+      "name": "unique_username",
+      "nils_distinct?": true,
+      "where": null
+    }
+  ],
   "multitenancy": {
     "attribute": null,
     "global": null,
@@ -113,5 +114,5 @@
   },
   "repo": "Elixir.MyAshBlog.Repo",
   "schema": null,
-  "table": "comments"
+  "table": "users"
 }

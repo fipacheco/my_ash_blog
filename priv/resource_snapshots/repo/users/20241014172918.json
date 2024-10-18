@@ -12,6 +12,16 @@
     },
     {
       "allow_nil?": false,
+      "default": "\"user\"",
+      "generated?": false,
+      "primary_key?": false,
+      "references": null,
+      "size": null,
+      "source": "role",
+      "type": "text"
+    },
+    {
+      "allow_nil?": true,
       "default": "nil",
       "generated?": false,
       "primary_key?": false,
@@ -37,18 +47,18 @@
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "password",
+      "source": "hashed_password",
       "type": "text"
     },
     {
       "allow_nil?": false,
-      "default": "nil",
+      "default": "false",
       "generated?": false,
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "hashed_password",
-      "type": "text"
+      "source": "is_author",
+      "type": "boolean"
     },
     {
       "allow_nil?": false,
@@ -76,7 +86,7 @@
   "custom_indexes": [],
   "custom_statements": [],
   "has_create_action": true,
-  "hash": "A656310F0A67310BA68D686EF6410E8890D89746BF832FADD16072AC3441B156",
+  "hash": "E1C75A79CAC450B5F40C76F429BFEE532467A5DFA051809631B12572FA5F27E1",
   "identities": [
     {
       "all_tenants?": false,
@@ -89,6 +99,20 @@
         }
       ],
       "name": "unique_email",
+      "nils_distinct?": true,
+      "where": null
+    },
+    {
+      "all_tenants?": false,
+      "base_filter": null,
+      "index_name": "users_unique_username_index",
+      "keys": [
+        {
+          "type": "atom",
+          "value": "username"
+        }
+      ],
+      "name": "unique_username",
       "nils_distinct?": true,
       "where": null
     }

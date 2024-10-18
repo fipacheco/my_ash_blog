@@ -2,23 +2,23 @@
   "attributes": [
     {
       "allow_nil?": false,
-      "default": "fragment(\"gen_random_uuid()\")",
-      "generated?": false,
-      "primary_key?": true,
-      "references": null,
-      "size": null,
-      "source": "id",
-      "type": "uuid"
-    },
-    {
-      "allow_nil?": false,
-      "default": "nil",
+      "default": "fragment(\"(now() AT TIME ZONE 'utc')\")",
       "generated?": false,
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "title",
-      "type": "text"
+      "source": "updated_at",
+      "type": "utc_datetime_usec"
+    },
+    {
+      "allow_nil?": false,
+      "default": "fragment(\"(now() AT TIME ZONE 'utc')\")",
+      "generated?": false,
+      "primary_key?": false,
+      "references": null,
+      "size": null,
+      "source": "created_at",
+      "type": "utc_datetime_usec"
     },
     {
       "allow_nil?": true,
@@ -27,28 +27,48 @@
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "content",
+      "source": "extra_data",
+      "type": "map"
+    },
+    {
+      "allow_nil?": false,
+      "default": "nil",
+      "generated?": false,
+      "primary_key?": false,
+      "references": null,
+      "size": null,
+      "source": "purpose",
       "type": "text"
     },
     {
       "allow_nil?": false,
-      "default": "fragment(\"(now() AT TIME ZONE 'utc')\")",
+      "default": "nil",
       "generated?": false,
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "inserted_at",
-      "type": "utc_datetime_usec"
+      "source": "expires_at",
+      "type": "utc_datetime"
     },
     {
       "allow_nil?": false,
-      "default": "fragment(\"(now() AT TIME ZONE 'utc')\")",
+      "default": "nil",
       "generated?": false,
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "updated_at",
-      "type": "utc_datetime_usec"
+      "source": "subject",
+      "type": "text"
+    },
+    {
+      "allow_nil?": false,
+      "default": "nil",
+      "generated?": false,
+      "primary_key?": true,
+      "references": null,
+      "size": null,
+      "source": "jti",
+      "type": "text"
     }
   ],
   "base_filter": null,
@@ -56,7 +76,7 @@
   "custom_indexes": [],
   "custom_statements": [],
   "has_create_action": true,
-  "hash": "BBC59FEEB64753222045D569E29C3244956D4430EC8F434FD5C3735746EFFE65",
+  "hash": "2AD8987A0D4DFBED15F6AA2AA64940642A20EBA600C907E8A6F56E7E19F6777F",
   "identities": [],
   "multitenancy": {
     "attribute": null,
@@ -65,5 +85,5 @@
   },
   "repo": "Elixir.MyAshBlog.Repo",
   "schema": null,
-  "table": "posts"
+  "table": "auth_tokens"
 }

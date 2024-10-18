@@ -12,12 +12,12 @@
     },
     {
       "allow_nil?": false,
-      "default": "nil",
+      "default": "\"user\"",
       "generated?": false,
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "author",
+      "source": "role",
       "type": "text"
     },
     {
@@ -27,8 +27,38 @@
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "content",
+      "source": "username",
       "type": "text"
+    },
+    {
+      "allow_nil?": false,
+      "default": "nil",
+      "generated?": false,
+      "primary_key?": false,
+      "references": null,
+      "size": null,
+      "source": "email",
+      "type": "text"
+    },
+    {
+      "allow_nil?": false,
+      "default": "nil",
+      "generated?": false,
+      "primary_key?": false,
+      "references": null,
+      "size": null,
+      "source": "hashed_password",
+      "type": "text"
+    },
+    {
+      "allow_nil?": false,
+      "default": "false",
+      "generated?": false,
+      "primary_key?": false,
+      "references": null,
+      "size": null,
+      "source": "is_author",
+      "type": "boolean"
     },
     {
       "allow_nil?": false,
@@ -56,8 +86,37 @@
   "custom_indexes": [],
   "custom_statements": [],
   "has_create_action": true,
-  "hash": "60D462C9D9F3B478955A5F59C5F32981345E38AF4A56A594B91777777759317E",
-  "identities": [],
+  "hash": "1420CD9C96F0F4578DA61AA40B1041AFCAF6ABB1D9AFA039D76CBE7139475270",
+  "identities": [
+    {
+      "all_tenants?": false,
+      "base_filter": null,
+      "index_name": "users_unique_email_index",
+      "keys": [
+        {
+          "type": "atom",
+          "value": "email"
+        }
+      ],
+      "name": "unique_email",
+      "nils_distinct?": true,
+      "where": null
+    },
+    {
+      "all_tenants?": false,
+      "base_filter": null,
+      "index_name": "users_unique_username_index",
+      "keys": [
+        {
+          "type": "atom",
+          "value": "username"
+        }
+      ],
+      "name": "unique_username",
+      "nils_distinct?": true,
+      "where": null
+    }
+  ],
   "multitenancy": {
     "attribute": null,
     "global": null,
@@ -65,5 +124,5 @@
   },
   "repo": "Elixir.MyAshBlog.Repo",
   "schema": null,
-  "table": "comments"
+  "table": "users"
 }

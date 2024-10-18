@@ -1,4 +1,4 @@
-defmodule MyAshBlog.Repo.Migrations.MigrateResources7 do
+defmodule MyAshBlog.Repo.Migrations.UpdatePolicies do
   @moduledoc """
   Updates resources based on their most recent snapshots.
 
@@ -7,9 +7,15 @@ defmodule MyAshBlog.Repo.Migrations.MigrateResources7 do
 
   use Ecto.Migration
 
-  def change do
+  def up do
     alter table(:users) do
-      remove :hashed_password
+      add :is_author, :boolean, null: false, default: false
+    end
+  end
+
+  def down do
+    alter table(:users) do
+      remove :is_author
     end
   end
 end

@@ -1,4 +1,4 @@
-defmodule MyAshBlog.Repo.Migrations.Install3Extensions20240920000852 do
+defmodule MyAshBlog.Repo.Migrations.Install3Extensions20241009181151 do
   @moduledoc """
   Installs any extensions that are mentioned in the repo's `installed_extensions/0` callback
 

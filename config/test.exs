@@ -8,10 +8,12 @@ import Config
 config :my_ash_blog, MyAshBlog.Repo,
   username: "postgres",
   password: "badcoffe",
-  database: "my_ash_blog_test",
+  database: "BANCO_TESTE",
   hostname: "localhost",
   port: 5433,
   pool: Ecto.Adapters.SQL.Sandbox,
+  migration_primary_key: [type: :uuid],
+  migration_foreign_key: [type: :uuid],
   pool_size: 10
 
 # We don't run a server during test. If one is required,

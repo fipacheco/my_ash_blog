@@ -38,6 +38,7 @@ defmodule MyAshBlog.MixProject do
       {:ash_json_api, "~> 1.0"},
       {:phoenix, "~> 1.7.14"},
       {:phoenix_ecto, "~> 4.5"},
+      {:argon2_elixir, "~> 3.0"},
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.1"},
